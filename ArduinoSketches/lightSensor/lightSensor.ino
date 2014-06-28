@@ -1,3 +1,20 @@
+/*   ---------------
+ *   lightSensor.ino
+ *   ---------------
+ * 
+ *   
+ *   Nicholas Roberts
+ *
+ *   This file reads data from a photoresistor connected to an Arduino
+ *   and prints it to the serial port. 
+ *
+ *   Slightly modified from http://arduinobasics.blogspot.com/2011/06/arduino-uno-photocell-sensing-light.html
+ * 
+ *   Happy Arduino-ing! 
+ */
+
+
+// Initialize relevant variables
 int photoRPin = 0; 
 int minLight;
 int maxLight;
@@ -5,30 +22,38 @@ int lightAmt;
 int percentageLightLevel;
 
 void setup() {
- Serial.begin(9600);
- 
- //Setup the starting light level limits
- lightAmt=analogRead(photoRPin);
- minLight=lightAmt-20;
- maxLight=lightAmt;
-}
+  
+  Serial.begin(9600);
+  
+  // Set relevant variables
+  lightAmt=analogRead(photoRPin);
+  minLight=lightAmt-20;
+  maxLight=lightAmt;
+  
+} // END setup
 
 void loop(){
- //auto-adjust the minimum and maximum limits in real time
- lightLevel=analogRead(photoRPin);
- if(minLight>lightAmt){
- minLight=lightAmt;
- }
- if(maxLight<lightAmt){
- maxLight=lightAmt;
- }
- 
- //Adjust the light level to produce a result between 0 and 100.
- percentageLightLevel = map(lightAmt, minLight, maxLight, 0, 100); 
- 
- //Send the adjusted Light level result to Serial port (processing)
- Serial.println(percentageLightLevel);
- 
- //slow down the transmission for effective Serial communication.
- delay(50);
-}
+  
+  // manage the mins and maxes
+  lightAmt=analogRead(photoRPin);
+  
+  if( minLight >= lightAmt-1 ){
+    minLight=lightAmt;
+  } // END if
+  
+  if( maxLight <= lightAmt-1 ){
+    maxLight=lightAmt;
+  } // END if
+  
+  // Convert to a percentage
+  percentageLightLevel = map(lightAmt, minLight, maxLight, 0, 100); 
+  
+  // Send the stuff to the serial port
+  Serial.println(percentageLightLevel);
+  
+  // add a bit of a delay
+  delay(50);
+  
+} // END void loop()
+
+
