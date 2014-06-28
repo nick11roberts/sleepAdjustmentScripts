@@ -1,0 +1,1 @@
+This is one of the craziest ways to readjust your sleep cycle using Arduino and Linux. Upon sunrise, a script will use text to speech to loudly announce the time and temperature until the user enters the numbers from LOST. Dharma initiative style user friendliness at its finest.
