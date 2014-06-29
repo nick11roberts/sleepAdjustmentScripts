@@ -9,10 +9,10 @@ import datetime
 PORT = "/dev/ttyACM0"
 SER = serial.Serial(PORT, 9600)
 # This is the length of the range used for averaging the data
-ARDUINO_DELAY = 15000
-AVERAGING_ITER_FACTOR = 40
-TIME_LENGTH_OF_AVERAGES = ARDUINO_DELAY * AVERAGING_ITER_FACTOR
-RANGE_ITERATIONS = (TIME_LENGTH_OF_AVERAGES/ARDUINO_DELAY)
+#ARDUINO_DELAY = 15000
+#AVERAGING_ITER_FACTOR = 40
+#TIME_LENGTH_OF_AVERAGES = ARDUINO_DELAY * AVERAGING_ITER_FACTOR
+#RANGE_ITERATIONS = (TIME_LENGTH_OF_AVERAGES/ARDUINO_DELAY)
 CUTOFF_VAL = 85
 NAME = "Nick"
 
@@ -25,8 +25,9 @@ dat_index = [0,0,0,0,
 			 0,0,0,0]
 
 
-def average_of_list(num_list, list_length):
+def average_of_list(num_list):
 	sum_of_list_items = 0
+	list_length = len(num_list)
 	average = 0
 	for i in range (0, list_length):
 		sum_of_list_items += num_list[i]
@@ -35,9 +36,13 @@ def average_of_list(num_list, list_length):
 
 
 def low():
-	for i in range (0, RANGE_ITERATIONS):
+	for i in range (len(dat_index)):
+		# Will ultimately wait for arduino to provide values
 		dat_index[i] = int(SER.readline())
-		dat_mean = average_of_list(dat_index, i+1)
+	dat_mean = average_of_list(dat_index)
+	print dat_index	
+	print dat_mean
+	print " "
 	if dat_mean <= CUTOFF_VAL-1: 
 		is_low = True
 	else:
