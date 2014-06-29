@@ -51,8 +51,8 @@ void loop(){
   // Send the stuff to the serial port
   Serial.println(percentageLightLevel);
   
-  // add a bit of a delay
-  delay(50);
+  // add a 15 second delay (four times per minute)
+  delay(15000);
   
 } // END void loop()
 
