@@ -52,6 +52,7 @@ def low():
 
 def text_to_speech(text):
       return os.system("espeak  -s 155 -a 200 "+text+" " )
+	
       
 
 # The first reading is most likely for calibration, so skip it.         
@@ -59,20 +60,26 @@ SER.readline()
 while running:
 	m = datetime.datetime.now().strftime("%I %M %S")
 	
-	if not low():
-		# TODO
-		# do something
-		# like make the user enter the numbers from LOST
-		# Perhaps later it can grab text from an online service or an AI? Maybe Reddit? 
-		text_to_speech("'Master "
-						+NAME+
-						", the time is "
-						+str(int(m[0:2]))
-						+" "+str(int(m[3:5]))
-						+" : go forth and "
-						+"prepare yourself some coffee : "
-						+"The day awaits : ' ")
-		running = False
+if not low():
+	# TODO
+	# do something
+	# like make the user enter the numbers from LOST
+	# Perhaps later it can grab text from an online service or an AI? Maybe Reddit? 
+	text_to_speech("'Master "
+					+NAME+
+					", the time is "
+					+str(int(m[0:2]))
+					+" "+str(int(m[3:5]))
+					+" : go forth and "
+					+"prepare yourself some coffee : "
+					+"The day awaits : ' ")
+	while True:
+		in_string = raw_input(" >: ")
+		if in_string == '4 8 15 16 23 42':
+			break
+		# play a beeping sound from an audio file in another task
+	text_to_speech("'Just saving the world.' ")
+	running = False
 		
 		
 		
